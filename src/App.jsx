@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import html2canvas from "html2canvas"
 
 const START_MONEY = 1000000
-const RACE_DURATION = 1000
+const RACE_DURATION = 5000
 const STORAGE_KEY = "horse_racing_save_v1"
 const SETTING_KEY = "horse_racing_setting_v1"
 const CURRENT_CARDS_KEY = "horse_racing_current_cards_v1"
@@ -695,24 +695,18 @@ const [roundWinner, setRoundWinner] = useState(null)
     if (screen !== "race" || !raceWinner) return
   
     setRaceProgress(0)
-    setCountdown(3)
+    setCountdown("READY")
   
-    let count = 3
-  
+    let count = 0
+
     const countdownTimer = setInterval(() => {
-      count -= 1
-  
-      if (count > 0) {
-        setCountdown(count)
-        return
-      }
-  
-      if (count === 0) {
+      count += 1
+    
+      if (count === 1) {
         setCountdown("GO!")
-      
         return
       }
-  
+    
       clearInterval(countdownTimer)
       setCountdown(null)
       playSound("run", true)
@@ -827,7 +821,7 @@ const [roundWinner, setRoundWinner] = useState(null)
       setRaceWinner(winner)
       setRaceTrack(getRandomTrack())
       setRaceProgress(0)
-      setCountdown(3)
+      setCountdown("READY")
       setRound(1)
       setScore({ a: 0, b: 0 })
       localStorage.setItem(LAST_SCREEN_KEY, "race")
@@ -863,7 +857,7 @@ const [roundWinner, setRoundWinner] = useState(null)
         setRound((r) => r + 1)
         setRaceWinner(nextWinner)
         setRaceProgress(0)
-        setCountdown(3)
+        setCountdown("READY")
       }, 1200)
   
       return
@@ -1104,7 +1098,7 @@ alert(
   </p>
 
   <p>Google Ads Policy: https://policies.google.com/technologies/ads</p>
-  <p>Contact: your@email.com</p>
+  <p>Contact: icd19880322@email.com</p>
   <div style={styles.footerLinks}>
   <button
     style={styles.footerLinkBtn}
@@ -1152,7 +1146,7 @@ alert(
       : "For questions or support, please contact us by email."}
   </p>
 
-  <p>Email: your@email.com</p>
+  <p>Email: icd19880322@email.com</p>
   <div style={styles.footerLinks}>
   <button style={styles.footerLinkBtn} onClick={() => goPage("/privacy")}>
     {t.privacy}
@@ -1326,10 +1320,6 @@ alert(
     display: "block",
   }}
 />
-
-<div style={styles.cardWinRateOverlay}>
-  {Math.round(card.winRate * 100)}%
-</div>
 
   <div style={styles.cardOddsOverlay}>x{card.odds}</div>
   <div style={styles.cardNameOverlay}>{getHorseName(card)}</div>
@@ -1877,12 +1867,12 @@ style={{
       https://policies.google.com/technologies/ads
     </div>
     <div>
-      문의: your@email.com
+      문의: icd19880322@email.com
     </div>
   </>
 ) : popup === "contact" ? (
   <>
-    <div>Email: your@email.com</div>
+    <div>Email: icd19880322@email.com</div>
   </>
 ) : popup === "support" ? (
   <>
