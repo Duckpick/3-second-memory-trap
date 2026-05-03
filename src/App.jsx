@@ -57,25 +57,34 @@ function formatMoney(value, language = "ko") {
   const JO = 1_000_000_000_000
   const GYEONG = 10_000_000_000_000_000
 
+  let result = ""
+
   if (v >= GYEONG) {
     const gyeong = Math.floor(v / GYEONG)
-    const restJo = Math.floor((v % GYEONG) / JO)
-    return restJo > 0 ? `${gyeong}경 ${restJo}조` : `${gyeong}경`
+    result += `${gyeong.toLocaleString()}경 `
   }
 
   if (v >= JO) {
-    const jo = Math.floor(v / JO)
-    const restEok = Math.floor((v % JO) / EOK)
-    return restEok > 0 ? `${jo}조 ${restEok}억` : `${jo}조`
+    const jo = Math.floor((v % GYEONG) / JO)
+    if (jo > 0) {
+      result += `${jo.toLocaleString()}조 `
+    }
   }
 
   if (v >= EOK) {
-    const eok = Math.floor(v / EOK)
-    const rest = v % EOK
-    return rest > 0 ? `${eok}억 ${rest.toLocaleString("ko-KR")}` : `${eok}억`
+    const eok = Math.floor((v % JO) / EOK)
+    if (eok > 0) {
+      result += `${eok.toLocaleString()}억 `
+    }
   }
 
-  return v.toLocaleString("ko-KR")
+  const rest = v % EOK
+
+  if (rest > 0 || result === "") {
+    result += rest.toLocaleString("ko-KR")
+  }
+
+  return result.trim()
 }
 function makeStars(value) {
   return "★".repeat(value) + "☆".repeat(5 - value)
@@ -1970,19 +1979,27 @@ style={{
 {t.recordReset}
   </button>
 
-  {installPrompt && (
   <button
     style={styles.popupBtn}
     onClick={async () => {
       playSound("click")
-      installPrompt.prompt()
-      await installPrompt.userChoice
-      setInstallPrompt(null)
+
+      if (installPrompt) {
+        installPrompt.prompt()
+        await installPrompt.userChoice
+        setInstallPrompt(null)
+        return
+      }
+
+      alert(
+        language === "ko"
+          ? "브라우저 메뉴에서 '홈 화면에 추가'를 선택하세요."
+          : "Use your browser menu and choose 'Add to Home Screen'."
+      )
     }}
   >
     {language === "ko" ? "홈화면 추가" : "Add to Home"}
   </button>
-)}
 
   <div style={styles.settingRow}>
   {t.sound}
@@ -2646,17 +2663,21 @@ margin: "0 auto",
     letterSpacing: "1px",
   },
   popupDim: {
-    position: "absolute",
-    inset: 0,
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     background: "rgba(0,0,0,0.65)",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
-    zIndex: 9999,
+    alignItems: "flex-start",
+    paddingTop: "60px",
+    zIndex: 999999,
+    overflowY: "auto",
   },
   
   popupBox: {
-    transform: "translate(0, 0)",
     width: "320px",
     padding: "18px",
     borderRadius: "16px",
@@ -2664,10 +2685,11 @@ margin: "0 auto",
     border: "1px solid #f6c343",
     color: "#fff",
     boxSizing: "border-box",
-  
-    margin: "0 auto",        // 🔥 중앙 정렬
+    margin: "12px auto 24px",
+    maxHeight: "calc(100vh - 40px)",
+    overflowY: "auto",
   },
-  
+
   popupTitle: {
     fontSize: "22px",
     fontWeight: "bold",
