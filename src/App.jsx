@@ -906,7 +906,7 @@ if (!wrongSoundRef.current) {
   const startGame = () => {
     playClick()
 
-    setStage(50)
+    setStage(GAME_CONFIG.startStage)
   
     const newCards = generateCards(stage)
   
