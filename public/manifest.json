@@ -1,4 +1,5 @@
 {
+  "id": "/memory-trap",
   "name": "3 Second Memory Trap",
   "short_name": "3s Trap",
   "start_url": ".",
