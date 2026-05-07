@@ -2338,7 +2338,7 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: "18px",
-    marginBottom: "50px",
+    marginBottom: "34px",
   },
   
   brandBox: {
@@ -2383,7 +2383,7 @@ const styles = {
   mainHero: {
     textAlign: "center",
     marginTop: "40px",
-    marginBottom: "50px",
+    marginBottom: "34px",
   },
   
   mainBigTitle: {
@@ -2410,7 +2410,7 @@ const styles = {
     fontSize: "17px",
     color: "#fff",
     lineHeight: "1.6",
-    marginTop: "36px",
+    marginTop: "22px",
   },
   recordCard: {
     marginTop: "28px",
