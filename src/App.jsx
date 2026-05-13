@@ -627,7 +627,6 @@ bestScoreLabel: "최고 기록",
     language: "언어",
     volume: "볼륨",
     close: "닫기",
-    ad: "Advertisement",
     privacy: "개인정보처리방침",
     contact: "문의",
     support: "후원",
@@ -684,7 +683,6 @@ bestScoreLabel: "Best Score",
     language: "Language",
     volume: "Volume",
     close: "Close",
-    ad: "Ad Area",
     privacy: "Privacy Policy",
     contact: "Contact",
     support: "Support",
@@ -1082,7 +1080,6 @@ if (!wrongSoundRef.current) {
 
   return (
     <div style={styles.page}>
-      {!isMobile && <div style={styles.sideAd}>{t.ad}</div>}
 
       <div style={{ ...styles.app, transform: `scale(${scale})` }}>
         {screen === "main" && (
@@ -1155,7 +1152,6 @@ if (!wrongSoundRef.current) {
 {t.start}
 </button>
 
-            <div style={styles.adBox}>{t.ad}</div>
             <CommonFooter />
           </>
         )}
@@ -1586,7 +1582,6 @@ style={{
         </>
       )}
 
-      <div style={styles.adBox}>{t.ad}</div>
     </div>
   </>
 )}
@@ -1686,7 +1681,6 @@ style={{
         )}
       </div>
 
-      {!isMobile && <div style={styles.sideAd}>{t.ad}</div>}
     </div>
   )
 }
@@ -1930,32 +1924,7 @@ const styles = {
     boxShadow: "0 0 18px rgba(40,167,69,0.45)",
   },
 
-  adBox: {
-    marginTop: "80px",
-    height: "100px",
-    background: "#222",
-    borderRadius: "10px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "#777",
-    fontSize: "14px",
-  },
 
-  sideAd: {
-    width: "160px",
-    height: "600px",
-    margin: "20px 16px",
-    background: "#222",
-    borderRadius: "12px",
-    border: "1px solid #333",
-    color: "#777",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "14px",
-    flexShrink: 0,
-  },
   resultBigIcon: {
     fontSize: "64px",
     marginBottom: "10px",
